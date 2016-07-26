@@ -3,7 +3,6 @@ package dynjson
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"strings"
 )
 
@@ -12,13 +11,10 @@ type dynObject struct {
 }
 
 // New: Creates a new dynObject
-func New(jsonFile string) *dynObject {
+func New(jsonFile []byte) *dynObject {
 	var jsonfile map[string]interface{}
 
-	file, err := ioutil.ReadFile(jsonFile)
-	handleErr(err)
-
-	err = json.Unmarshal(file, &jsonfile)
+	err := json.Unmarshal(jsonFile, &jsonfile)
 	handleErr(err)
 
 	dynData := &dynObject{dynData: parser(jsonfile, "", 0)}
